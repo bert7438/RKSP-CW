@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 5000
 app.use(express.json({extended: true}))
 
 app.use('/api/auth', require('./routes/auth.route'))
+app.use('/api/post', require('./routes/post.route'))
 async function start() {
     try{
         await mongoose.connect('mongodb+srv://admin:admin@cluster0.c408rxf.mongodb.net/?retryWrites=true&w=majority', {
