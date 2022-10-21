@@ -28,4 +28,13 @@ router.get('/', async (req, res) =>{
         console.log(e)
     }
 })
+
+router.delete('/delete/:id', async (req, res) => {
+    try {
+        const post = await Post.findOneAndDelete({_id: req.params.id})
+        res.json(post)
+    } catch (e) {
+        console.log(e)
+    }
+})
 module.exports = router
