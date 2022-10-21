@@ -18,4 +18,14 @@ router.post('/add', async (req, res) => {
         console.log(e)
     }
 })
+
+router.get('/', async (req, res) =>{
+    try {
+        const {userId} = req.query
+        const post = await Post.find({owner: userId})
+        res.json(post)
+    } catch (e) {
+        console.log(e)
+    }
+})
 module.exports = router
