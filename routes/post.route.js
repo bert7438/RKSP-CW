@@ -37,4 +37,16 @@ router.delete('/delete/:id', async (req, res) => {
         console.log(e)
     }
 })
+
+router.put('/complete/:id', async (req, res) => {
+    try{
+        const post = await Post.findOne({_id: req.params.id})
+        post.completed = !post.completed
+
+        await post.save()
+        res.json(post)
+    } catch (e) {
+        console.log(e)
+    }
+})
 module.exports = router

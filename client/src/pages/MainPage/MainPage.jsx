@@ -14,8 +14,7 @@ const MainPage = () => {
             await axios.get('/api/post', {
                 headers: {
                     'Content-Type': 'application/json'
-                },
-                params: {userId}
+                }, params: {userId}
             }).then((response) => setPosts(response.data))
         } catch (e) {
             console.log(e)
@@ -30,7 +29,20 @@ const MainPage = () => {
         } catch (e) {
             console.log(e)
         }
-    },[getPost])
+    }, [getPost])
+
+    const completedPost = useCallback(async (id) => {
+        try {
+            await axios.put(`/api/post/complete/${id}`, {id}, {
+                headers: {'Content-Type': 'application/json'}
+            }).then(response => {
+                setPosts([...posts], response.data)
+                getPost()
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }, [getPost, posts])
 
     const createPost = useCallback(async () => {
         if (!text) {
@@ -52,6 +64,7 @@ const MainPage = () => {
 
     getPost().then(() => {
     })
+
     return (<div className="container">
         <div className="main-page">
             <h4>Добавить пост:</h4>
@@ -74,22 +87,23 @@ const MainPage = () => {
                 </div>
                 <h3>Посты:</h3>
                 <div className="posts">
-                    {
-                        posts.map((post, index) => {
-                            return (
-                                <div className="row flex posts-item" key={index}>
-                                    <div className="col posts-num">{index + 1}</div>
-                                    <div className="col posts-text">{post.text}</div>
-                                    <div className="col posts-buttons">
-                                        <i className="material-icons blue-text">check</i>
-                                        <i className="material-icons orange-text">warning</i>
-                                        <i className="material-icons red-text"
-                                           onClick={() => removePost(post._id)}>delete</i>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
+                    {posts.map((post, index) => {
+                        let cls = ['row flex posts-item']
+                        if(post.completed){
+                            cls.push('completed')
+                        }
+
+                        return (<div className={cls.join(' ')} key={index}>
+                            <div className="col posts-num">{index + 1}</div>
+                            <div className="col posts-text">{post.text}</div>
+                            <div className="col posts-buttons">
+                                <i className="material-icons blue-text" onClick={() => completedPost(post._id)}>check</i>
+                                <i className="material-icons orange-text">warning</i>
+                                <i className="material-icons red-text"
+                                   onClick={() => removePost(post._id)}>delete</i>
+                            </div>
+                        </div>)
+                    })}
                 </div>
             </form>
         </div>
