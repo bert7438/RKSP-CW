@@ -49,4 +49,16 @@ router.put('/complete/:id', async (req, res) => {
         console.log(e)
     }
 })
+
+router.put('/important/:id', async (req, res) => {
+    try{
+        const post = await Post.findOne({_id: req.params.id})
+        post.important = !post.important
+
+        await post.save()
+        res.json(post)
+    } catch (e) {
+        console.log(e)
+    }
+})
 module.exports = router

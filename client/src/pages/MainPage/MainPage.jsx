@@ -44,6 +44,20 @@ const MainPage = () => {
         }
     }, [getPost, posts])
 
+    const importantPost = useCallback(async (id) => {
+        try {
+            await axios.put(`/api/post/important/${id}`, {id}, {
+                headers: {'Content-Type': 'application/json'}
+            }).then(response => {
+                setPosts([...posts], response.data)
+                getPost()
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }, [getPost, posts])
+
+
     const createPost = useCallback(async () => {
         if (!text) {
             await getPost();
@@ -89,16 +103,21 @@ const MainPage = () => {
                 <div className="posts">
                     {posts.map((post, index) => {
                         let cls = ['row flex posts-item']
-                        if(post.completed){
+                        if (post.completed) {
                             cls.push('completed')
+                        }
+                        if(post.important) {
+                            cls.push('important')
                         }
 
                         return (<div className={cls.join(' ')} key={index}>
                             <div className="col posts-num">{index + 1}</div>
                             <div className="col posts-text">{post.text}</div>
                             <div className="col posts-buttons">
-                                <i className="material-icons blue-text" onClick={() => completedPost(post._id)}>check</i>
-                                <i className="material-icons orange-text">warning</i>
+                                <i className="material-icons blue-text"
+                                   onClick={() => completedPost(post._id)}>check</i>
+                                <i className="material-icons orange-text"
+                                   onClick={() => importantPost(post._id)}>warning</i>
                                 <i className="material-icons red-text"
                                    onClick={() => removePost(post._id)}>delete</i>
                             </div>
