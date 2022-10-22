@@ -1,12 +1,13 @@
 {
   "name": "rksp-cw",
   "version": "1.0.0",
-  "description": "",
+  "description": "RKSP Coursework Anime-Forum",
   "main": "index.js",
   "scripts": {
     "server": "nodemon index.js",
     "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client "
   },
   "keywords": [],
   "author": "",
