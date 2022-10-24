@@ -81,7 +81,7 @@ const MainPage = () => {
     return (
         <div className="container">
         <div className="main-page">
-            <h4>Добавить пост:</h4>
+            <h4>Добавить запись:</h4>
             <form className="form form-login" onSubmit={e => e.preventDefault()}>
                 <div className="row">
                     <div className="input-field col s12">

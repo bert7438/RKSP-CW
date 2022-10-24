@@ -29,14 +29,6 @@ router.get('/', async (req, res) =>{
     }
 })
 
-router.get('/all', async (req, res) =>{
-    try {
-        const posts = await Post.find()
-        res.json(posts)
-    } catch (e) {
-        console.log(e)
-    }
-})
 
 router.delete('/delete/:id', async (req, res) => {
     try {
