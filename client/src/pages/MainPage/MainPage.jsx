@@ -76,10 +76,10 @@ const MainPage = () => {
         }
     }, [text, userId, posts, getPost])
 
-    getPost().then(() => {
-    })
 
-    return (<div className="container">
+
+    return (
+        <div className="container">
         <div className="main-page">
             <h4>Добавить пост:</h4>
             <form className="form form-login" onSubmit={e => e.preventDefault()}>
@@ -93,13 +93,14 @@ const MainPage = () => {
                             value={text}
                             onChange={e => setText(e.target.value)}
                         />
-                        <label htmlFor="input">Задача</label>
+                        <label htmlFor="input">Запись</label>
                     </div>
                 </div>
                 <div className="row">
                     <button className="waves-effect waves-light btn blue" onClick={createPost}>Добавить</button>
                 </div>
-                <h3>Посты:</h3>
+                <div className="row"><button className="waves-effect waves-light btn green" onClick={getPost}>Обновить</button></div>
+                <h3>Записи о просмотренном:</h3>
                 <div className="posts">
                     {posts.map((post, index) => {
                         let cls = ['row flex posts-item']
